@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ملف تتبع التقدم والأهداف الذكي</title>
+    <title>Stepwise </title>
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎯%3C/text%3E%3C/svg%3E">
+    <link rel="icon" type="image/png"
+        href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZAAAAWVJREFUWEftV7FNAzEQfPcFUEAFQANABXQAUABTAB3QAFABUABTAB0ABSAFQAdABYigAFWBAigtkRzLZ9+dfUnwJG+03917v73eKc6/0jmBHMBlyucTQhkDHPZAf7U+aVtCqDuLoDcEQGsIgE5DmDoC3UvbMAW5VdTaykCQJzFzBDAFzFJ7Sryq6gHzah2NvgbgCtgHnLvuOcCqOla5qQfuAasgXwIMwB3gBngGnippH1CRBsiYpL4DnIgrAlwCfWCCOwCHpGMl6BG4BN4B9sATsE1OU8DkYhO6iNkK+IBW4u8cc2zwZmN9o1yS3+tdAr1R+BdAtAI2hxE7BHKrH+YsWQOzxTdIu/Zn//lT3iBkCmtqAfx3oPAUjL7b3hBgqrdZPD4B8Z8p8F3Y/gt5a+rsje4A+NjMPH8BHzOP/lTA6/fACOB3GPzVgV9tBaCSu5wF3LbcU3BXYnPm/hi0wAUqlXJwRAtcgNU/Pv0C4MqT/h3oLc4AAAAASUVORK5CYII=">
     <style>
         :root {
             --primary-color: #054239;
@@ -36,7 +41,7 @@
             background: var(--primary-color);
             color: white;
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         header h1 {
@@ -54,7 +59,7 @@
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         .panel-title {
@@ -123,6 +128,7 @@
         button.btn-danger {
             background-color: var(--danger-color);
         }
+
         button.btn-danger:hover {
             background-color: #c0392b;
         }
@@ -136,7 +142,7 @@
         .goal-card {
             background: var(--card-bg);
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
             border-top: 4px solid var(--accent-color);
             padding: 20px;
             position: relative;
@@ -149,6 +155,8 @@
             margin-bottom: 15px;
             border-bottom: 1px solid #eee;
             padding-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .goal-title {
@@ -164,10 +172,12 @@
             text-align: right;
         }
 
-        th, td {
+        th,
+        td {
             padding: 10px;
             border-bottom: 1px solid #eee;
             font-size: 14px;
+            vertical-align: middle;
         }
 
         th {
@@ -176,7 +186,9 @@
             font-weight: 600;
         }
 
-        table input[type="text"], table select {
+        table input[type="text"],
+        table input[type="date"],
+        table select {
             width: 100%;
             padding: 8px;
             border: 1px solid #e0e0e0;
@@ -187,7 +199,9 @@
             transition: border-color 0.2s;
         }
 
-        table input[type="text"]:focus, table select:focus {
+        table input[type="text"]:focus,
+        table input[type="date"]:focus,
+        table select:focus {
             border-color: var(--accent-color);
             outline: none;
             background-color: #fffefb;
@@ -203,11 +217,16 @@
             border-radius: 6px;
         }
 
-        .add-row-form input, .add-row-form select {
+        .add-row-form input,
+        .add-row-form select {
             padding: 8px;
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 14px;
+        }
+
+        .add-row-form input[type="date"] {
+            min-width: 0;
         }
 
         .action-cell {
@@ -220,126 +239,218 @@
             font-size: 12px;
         }
 
+        /* تحسينات الجوال: عرض الحقول تحت بعضها */
         @media (max-width: 768px) {
             .add-row-form {
                 grid-template-columns: 1fr;
+                gap: 8px;
             }
+
+            .add-row-form input,
+            .add-row-form select {
+                width: 100%;
+            }
+
             .flex-form {
                 flex-direction: column;
                 align-items: stretch;
             }
+
+            /* عرض الجدول بشكل متجاوب */
+            table,
+            thead,
+            tbody,
+            th,
+            td,
+            tr {
+                display: block;
+            }
+
+            thead tr {
+                display: none;
+            }
+
+            tr {
+                border: 1px solid #eee;
+                margin-bottom: 10px;
+                border-radius: 6px;
+                padding: 10px;
+                background: #fafafa;
+            }
+
+            td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 8px 5px;
+                border-bottom: 1px dashed #ddd;
+                gap: 10px;
+            }
+
+            td:last-child {
+                border-bottom: none;
+            }
+
+            td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                color: var(--primary-color);
+                min-width: 80px;
+                font-size: 13px;
+            }
+
+            td input,
+            td select {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .action-cell {
+                width: auto;
+                justify-content: center;
+            }
+
+            .action-cell::before {
+                content: "إجراء";
+            }
+        }
+
+        @media (max-width: 480px) {
+            .goal-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .goal-header button {
+                width: 100%;
+            }
         }
     </style>
 </head>
+
 <body>
 
-<div class="container">
-    <header>
-        <h1>نظام تتبع الأهداف والتقدم الذكي</h1>
-        <p>عدل أي خانة مباشرة في الجدول، وسيتم الحفظ تلقائياً في المتصفح</p>
-    </header>
+    <div class="container">
+        <header>
+            <h1>نظام تتبع الأهداف والتقدم </h1>
+            <p>أداة بسيطة لإدارة مشاريعك وأهدافك اليومية مع إمكانية تتبع التقدم بشكل لحظي. قم بإضافة المهام، تحديث
+                الحالات، وتسجيل التواريخ بسهولة، وستحفظ جميع التعديلات تلقائياً في متصفحك دون الحاجة لحساب أو اتصال
+                بالإنترنت.</p>
+            <p>عدل أي خانة مباشرة في الجدول، وسيتم الحفظ تلقائياً في المتصفح</p>
+        </header>
 
-    <div class="dashboard-panel">
-        <div class="panel-title">إدارة خيارات قائمة "حالة التقدم" (Dropdown):</div>
-        <div id="status-tags-list" class="status-tags-container"></div>
-        <div class="flex-form">
-            <input type="text" id="new-status-option" placeholder="إضافة حالة جديدة للقائمة (مثال: قيد المراجعة)...">
-            <button onclick="addStatusOption()">إضافة حالة للقائمة</button>
+        <div class="dashboard-panel">
+            <div class="panel-title">إدارة خيارات قائمة "حالة التقدم" (Dropdown):</div>
+            <div id="status-tags-list" class="status-tags-container"></div>
+            <div class="flex-form">
+                <input type="text" id="new-status-option"
+                    placeholder="إضافة حالة جديدة للقائمة (مثال: قيد المراجعة)...">
+                <button onclick="addStatusOption()">إضافة حالة للقائمة</button>
+            </div>
         </div>
+
+        <div class="dashboard-panel">
+            <div class="panel-title">إضافة هدف أو مشروع رئيسي جديد:</div>
+            <div class="flex-form">
+                <input type="text" id="new-goal-title" placeholder="اكتب اسم الهدف أو المشروع الجديد هنا...">
+                <button onclick="createNewGoal()">إضافة هدف جديد</button>
+            </div>
+        </div>
+
+        <div id="goals-container" class="goals-grid"></div>
     </div>
 
-    <div class="dashboard-panel">
-        <div class="panel-title">إضافة هدف أو مشروع رئيسي جديد:</div>
-        <div class="flex-form">
-            <input type="text" id="new-goal-title" placeholder="اكتب اسم الهدف أو المشروع الجديد هنا...">
-            <button onclick="createNewGoal()">إضافة هدف جديد</button>
-        </div>
-    </div>
+    <script>
+        const defaultStatuses = ["", "جاهز", "جاري العمل"];
 
-    <div id="goals-container" class="goals-grid"></div>
-</div>
-
-<script>
-    const defaultStatuses = ["", "جاهز", "جاري العمل"];
-
-    let statusOptions = JSON.parse(localStorage.getItem('statusOptions'));
-    if (!statusOptions) {
-        statusOptions = defaultStatuses;
-        localStorage.setItem('statusOptions', JSON.stringify(statusOptions));
-    }
-
-    // Start with empty goals if no data exists
-    let goalsData = JSON.parse(localStorage.getItem('goalsData'));
-    if (!goalsData) {
-        goalsData = [];
-        localStorage.setItem('goalsData', JSON.stringify(goalsData));
-    }
-
-    function renderStatusTags() {
-        const tagsContainer = document.getElementById('status-tags-list');
-        tagsContainer.innerHTML = '';
-        
-        statusOptions.forEach((opt, index) => {
-            if (opt === "") return;
-            const tag = document.createElement('span');
-            tag.className = 'status-tag';
-            tag.innerHTML = `${opt} <span class="remove-btn" onclick="deleteStatusOption(${index})">&times;</span>`;
-            tagsContainer.appendChild(tag);
-        });
-    }
-
-    function getStatusOptionsHtml(currentStatus) {
-        let tempOptions = [...statusOptions];
-        if (currentStatus && !tempOptions.includes(currentStatus)) {
-            tempOptions.push(currentStatus);
+        let statusOptions = JSON.parse(localStorage.getItem('statusOptions'));
+        if (!statusOptions) {
+            statusOptions = defaultStatuses;
+            localStorage.setItem('statusOptions', JSON.stringify(statusOptions));
         }
-        
-        return tempOptions.map(opt => {
-            const selected = opt === currentStatus ? 'selected' : '';
-            return `<option value="${opt}" ${selected}>${opt || '---'}</option>`;
-        }).join('');
-    }
 
-    function renderGoals() {
-        const container = document.getElementById('goals-container');
-        container.innerHTML = '';
+        let goalsData = JSON.parse(localStorage.getItem('goalsData'));
 
-        if (goalsData.length === 0) {
-            container.innerHTML = `
+        // إذا لم توجد بيانات، نضيف هدفاً افتراضياً
+        if (!goalsData) {
+            goalsData = [
+                {
+                    id: Date.now(),
+                    title: "مشروع تطوير المهارات",
+                    progress: [
+                        { text: "البدء في دراسة الجافا سكريبت", status: "جاري العمل", date: "2026-06-01" },
+                        { text: "إنجاز مشروع واجهة المستخدم", status: "جاهز", date: "2026-06-10" }
+                    ]
+                }
+            ];
+            localStorage.setItem('goalsData', JSON.stringify(goalsData));
+        }
+
+        function renderStatusTags() {
+            const tagsContainer = document.getElementById('status-tags-list');
+            tagsContainer.innerHTML = '';
+
+            statusOptions.forEach((opt, index) => {
+                if (opt === "") return;
+                const tag = document.createElement('span');
+                tag.className = 'status-tag';
+                tag.innerHTML = `${opt} <span class="remove-btn" onclick="deleteStatusOption(${index})">&times;</span>`;
+                tagsContainer.appendChild(tag);
+            });
+        }
+
+        function getStatusOptionsHtml(currentStatus) {
+            let tempOptions = [...statusOptions];
+            if (currentStatus && !tempOptions.includes(currentStatus)) {
+                tempOptions.push(currentStatus);
+            }
+
+            return tempOptions.map(opt => {
+                const selected = opt === currentStatus ? 'selected' : '';
+                return `<option value="${opt}" ${selected}>${opt || '---'}</option>`;
+            }).join('');
+        }
+
+        function renderGoals() {
+            const container = document.getElementById('goals-container');
+            container.innerHTML = '';
+
+            if (goalsData.length === 0) {
+                container.innerHTML = `
                 <div style="text-align:center; padding: 60px 20px; background:white; border-radius:8px; color:#888; font-size:18px;">
                     🚀 لا توجد أهداف حالياً. أضف هدفك الأول من الأعلى!
                 </div>
             `;
-            return;
-        }
+                return;
+            }
 
-        goalsData.forEach(goal => {
-            const card = document.createElement('div');
-            card.className = 'goal-card';
+            goalsData.forEach(goal => {
+                const card = document.createElement('div');
+                card.className = 'goal-card';
 
-            let tableRows = '';
-            goal.progress.forEach((prog, index) => {
-                tableRows += `
+                let tableRows = '';
+                goal.progress.forEach((prog, index) => {
+                    tableRows += `
                     <tr>
-                        <td>
+                        <td data-label="التقدم">
                             <input type="text" value="${prog.text}" onchange="updateProgressField(${goal.id}, ${index}, 'text', this.value)">
                         </td>
-                        <td>
+                        <td data-label="حالة التقدم">
                             <select onchange="updateProgressField(${goal.id}, ${index}, 'status', this.value)">
                                 ${getStatusOptionsHtml(prog.status)}
                             </select>
                         </td>
-                        <td>
-                            <input type="text" value="${prog.date}" onchange="updateProgressField(${goal.id}, ${index}, 'date', this.value)">
+                        <td data-label="تاريخ التقدم">
+                            <input type="date" value="${prog.date}" onchange="updateProgressField(${goal.id}, ${index}, 'date', this.value)">
                         </td>
-                        <td class="action-cell">
+                        <td data-label="إجراء" class="action-cell">
                             <button class="btn-danger btn-sm" onclick="deleteProgressRow(${goal.id}, ${index})">حذف</button>
                         </td>
                     </tr>
                 `;
-            });
+                });
 
-            card.innerHTML = `
+                card.innerHTML = `
                 <div class="goal-header">
                     <div class="goal-title">${goal.title}</div>
                     <button class="btn-danger btn-sm" onclick="deleteGoal(${goal.id})">حذف الهدف بالكامل</button>
@@ -362,105 +473,106 @@
                     <select id="status-${goal.id}">
                         ${getStatusOptionsHtml("")}
                     </select>
-                    <input type="text" id="date-${goal.id}" placeholder="التاريخ (مثال: 16/6/2026)">
+                    <input type="date" id="date-${goal.id}">
                     <button onclick="addProgressRow(${goal.id})">إضافة سطر</button>
                 </div>
             `;
-            container.appendChild(card);
-        });
-    }
-
-    function saveGoalsData() {
-        localStorage.setItem('goalsData', JSON.stringify(goalsData));
-    }
-
-    function updateProgressField(goalId, rowIndex, field, value) {
-        const goal = goalsData.find(g => g.id === goalId);
-        if (goal && goal.progress[rowIndex]) {
-            goal.progress[rowIndex][field] = value.trim();
-            saveGoalsData();
+                container.appendChild(card);
+            });
         }
-    }
 
-    function addStatusOption() {
-        const input = document.getElementById('new-status-option');
-        const val = input.value.trim();
-        if(!val) return alert('الرجاء كتابة اسم الحالة أولاً');
-        if(statusOptions.includes(val)) return alert('هذه الحالة موجودة بالفعل في القائمة!');
+        function saveGoalsData() {
+            localStorage.setItem('goalsData', JSON.stringify(goalsData));
+        }
 
-        statusOptions.push(val);
-        localStorage.setItem('statusOptions', JSON.stringify(statusOptions));
-        input.value = '';
-        renderStatusTags();
-        renderGoals();
-    }
+        function updateProgressField(goalId, rowIndex, field, value) {
+            const goal = goalsData.find(g => g.id === goalId);
+            if (goal && goal.progress[rowIndex]) {
+                goal.progress[rowIndex][field] = value.trim();
+                saveGoalsData();
+            }
+        }
 
-    function deleteStatusOption(index) {
-        const targetStatus = statusOptions[index];
-        if(confirm(`هل أنت متأكد من حذف الحالة "${targetStatus}" من الخيارات المتاحة؟\n(ملاحظة: السطور القديمة التي تحمل هذه الحالة لن تتأثر إلا إذا قمت بتغييرها يدويًا)`)) {
-            statusOptions.splice(index, 1);
+        function addStatusOption() {
+            const input = document.getElementById('new-status-option');
+            const val = input.value.trim();
+            if (!val) return alert('الرجاء كتابة اسم الحالة أولاً');
+            if (statusOptions.includes(val)) return alert('هذه الحالة موجودة بالفعل في القائمة!');
+
+            statusOptions.push(val);
             localStorage.setItem('statusOptions', JSON.stringify(statusOptions));
+            input.value = '';
             renderStatusTags();
             renderGoals();
         }
-    }
 
-    function createNewGoal() {
-        const titleInput = document.getElementById('new-goal-title');
-        const title = titleInput.value.trim();
-        if (!title) return alert('الرجاء إدخال اسم الهدف أولاً');
+        function deleteStatusOption(index) {
+            const targetStatus = statusOptions[index];
+            if (confirm(`هل أنت متأكد من حذف الحالة "${targetStatus}" من الخيارات المتاحة؟\n(ملاحظة: السطور القديمة التي تحمل هذه الحالة لن تتأثر إلا إذا قمت بتغييرها يدويًا)`)) {
+                statusOptions.splice(index, 1);
+                localStorage.setItem('statusOptions', JSON.stringify(statusOptions));
+                renderStatusTags();
+                renderGoals();
+            }
+        }
 
-        const newGoal = {
-            id: Date.now(),
-            title: title,
-            progress: []
-        };
+        function createNewGoal() {
+            const titleInput = document.getElementById('new-goal-title');
+            const title = titleInput.value.trim();
+            if (!title) return alert('الرجاء إدخال اسم الهدف أولاً');
 
-        goalsData.push(newGoal);
-        titleInput.value = '';
-        saveGoalsData();
+            const newGoal = {
+                id: Date.now(),
+                title: title,
+                progress: []
+            };
+
+            goalsData.push(newGoal);
+            titleInput.value = '';
+            saveGoalsData();
+            renderGoals();
+        }
+
+        function deleteGoal(goalId) {
+            if (confirm('هل أنت متأكد من حذف هذا الهدف وكل ما يتعلق به؟')) {
+                goalsData = goalsData.filter(g => g.id !== goalId);
+                saveGoalsData();
+                renderGoals();
+            }
+        }
+
+        function addProgressRow(goalId) {
+            const textInput = document.getElementById(`text-${goalId}`);
+            const statusSelect = document.getElementById(`status-${goalId}`);
+            const dateInput = document.getElementById(`date-${goalId}`);
+
+            const text = textInput.value.trim();
+            const status = statusSelect.value;
+            const date = dateInput.value;
+
+            if (!text) return alert('الرجاء كتابة تفاصيل التقدم');
+
+            const goal = goalsData.find(g => g.id === goalId);
+            if (goal) {
+                goal.progress.push({ text, status, date });
+                saveGoalsData();
+                renderGoals();
+            }
+        }
+
+        function deleteProgressRow(goalId, rowIndex) {
+            const goal = goalsData.find(g => g.id === goalId);
+            if (goal) {
+                goal.progress.splice(rowIndex, 1);
+                saveGoalsData();
+                renderGoals();
+            }
+        }
+
+        renderStatusTags();
         renderGoals();
-    }
-
-    function deleteGoal(goalId) {
-        if(confirm('هل أنت متأكد من حذف هذا الهدف وكل ما يتعلق به؟')) {
-            goalsData = goalsData.filter(g => g.id !== goalId);
-            saveGoalsData();
-            renderGoals();
-        }
-    }
-
-    function addProgressRow(goalId) {
-        const textInput = document.getElementById(`text-${goalId}`);
-        const statusSelect = document.getElementById(`status-${goalId}`);
-        const dateInput = document.getElementById(`date-${goalId}`);
-
-        const text = textInput.value.trim();
-        const status = statusSelect.value;
-        const date = dateInput.value.trim();
-
-        if (!text) return alert('الرجاء كتابة تفاصيل التقدم');
-
-        const goal = goalsData.find(g => g.id === goalId);
-        if (goal) {
-            goal.progress.push({ text, status, date });
-            saveGoalsData();
-            renderGoals();
-        }
-    }
-
-    function deleteProgressRow(goalId, rowIndex) {
-        const goal = goalsData.find(g => g.id === goalId);
-        if (goal) {
-            goal.progress.splice(rowIndex, 1);
-            saveGoalsData();
-            renderGoals();
-        }
-    }
-
-    renderStatusTags();
-    renderGoals();
-</script>
+    </script>
 
 </body>
+
 </html>
